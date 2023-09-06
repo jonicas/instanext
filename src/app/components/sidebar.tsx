@@ -1,25 +1,20 @@
 "use client";
 import React, { useState, ComponentProps } from "react";
-import {
-  HomeIcon,
-  MagnifyingGlassIcon,
-  HeartIcon,
-  AvatarIcon,
-  GlobeIcon,
-} from "@radix-ui/react-icons";
+import { Home, Search, Compass, Heart, UserCircle } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 import Link from "next/link";
 
-export type SidebarMenuProps = {
-  key: React.Key;
+export interface SidebarMenuProps {
   title: string;
   path: string;
   children: React.ReactNode;
-};
+}
 
 export function SidebarMenu(props: SidebarMenuProps) {
+  const pathname = usePathname();
   return (
-    <li key={props.key} className="rounded-md hover:bg-[#1a1a1a]">
+    <li className="rounded-md hover:bg-[--hover-bg-color]">
       <Link className="flex flex-row items-center gap-2 p-3" href={props.path}>
         {props.children}
       </Link>
@@ -29,19 +24,19 @@ export function SidebarMenu(props: SidebarMenuProps) {
 
 export function Sidebar() {
   const [menus, setMenus] = useState([
-    { title: "Home", path: "/", icon: <HomeIcon /> },
-    { title: "Search", path: "/search", icon: <MagnifyingGlassIcon /> },
-    { title: "Explore", path: "/explore", icon: <GlobeIcon /> },
-    { title: "Notification", path: "/notifications", icon: <HeartIcon /> },
-    { title: "Profile", path: "/profile", icon: <AvatarIcon /> },
+    { title: "Home", path: "/", icon: <Home /> },
+    { title: "Search", path: "/search", icon: <Search /> },
+    { title: "Explore", path: "/explore", icon: <Compass /> },
+    { title: "Notification", path: "/notifications", icon: <Heart /> },
+    { title: "Profile", path: "/profile", icon: <UserCircle /> },
   ]);
 
   return (
     <div className="p-3">
-      <div className="h-[92px] w-max">JONICAS</div>
+      <div className="flex h-[92px] w-full">INSTA.NEXT</div>
       <ul className="text-lg">
-        {menus.map(({ path, title, icon }) => (
-          <SidebarMenu key={title} path={path} title={title}>
+        {menus.map(({ path, title, icon }, index) => (
+          <SidebarMenu key={index} path={path} title={title}>
             {icon} {title}
           </SidebarMenu>
         ))}
